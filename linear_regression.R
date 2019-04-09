@@ -219,7 +219,7 @@ str(states.data$region)
 states.data$region <- factor(states.data$region)
 #Add region to the model
 sat.region <- lm(csat ~ region,
-                 data=states.data) 
+                 data=states.data)
 #Show the results
 coef(summary(sat.region)) # show regression coefficients table
 anova(sat.region) # show ANOVA table
@@ -257,9 +257,17 @@ energy.mod4 <- lm(energy ~ toxic*density + green, states.data)
 summary(energy.mod4)
 
 
-
 ##   2. Try adding region to the model. Are there significant differences
 ##      across the four regions?
+states.data$region <- factor(states.data$region)
 
+energy.mod5 <- lm(energy ~ region, states.data)
+summary(energy.mod5)
 
+coef(summary(lm(energy ~ C(region, base=4),
+                data=states.data)))
 
+coef(summary(lm(energy ~ toxic + green + C(region, base=4),
+                data=states.data)))
+
+##  There doesn't seem to be any significant differences between the regions.
